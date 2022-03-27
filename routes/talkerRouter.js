@@ -11,9 +11,9 @@ const HTTP_OK_STATUS = 200;
 const HTTP_NOT_FOUND_STATUS = 404;
 router.get('/talker', async (_request, response) => {
   const talker = await fs.readFile('talker.json', 'utf-8');
-  console.log(talker);
+  // console.log(talker);
   const talkerObj = JSON.parse(talker);
-  console.log(talkerObj);
+  // console.log(talkerObj);
   if (!talkerObj) {
     return response.status(HTTP_OK_STATUS).send([]);
   }
