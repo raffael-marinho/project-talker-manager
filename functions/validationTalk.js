@@ -20,7 +20,7 @@ function authorizationTalkRate(req, res, next) {
 }
 function authorizationTalk(req, res, next) {
   const { talk } = req.body;
-  if (!talk || !talk.rate || !talk.watchedAt) {
+  if (!talk || talk.rate === undefined || !talk.watchedAt) {
     return res.status(HTTP_BAD_REQUEST_STATUS).json({
       message:
         'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios',

@@ -72,4 +72,28 @@ router.post(
   },
 );
 
+router.put(
+  '/:id',
+  authorizationToken,
+  authorizationAge,
+  authorizationName,
+  authorizationTalk,
+  authorizationTalkRate,
+  authorizationTalkWatchedAt,
+  async (req, res) => {
+    const { id } = req.params;
+    // const { authorization } = req.headers;
+    const { name, age, talk } = req.body;
+    const talkers = await fs.readFile('talker.json', 'utf-8');
+    const talkersObj = JSON.parse(talkers);
+    const talker = talkersObj.filter(
+      (talkerObj) => talkerObj.id !== parseInt(id, 20),
+    );
+    const objInfo = { name, age, talk, id: Number(id) };
+    talker.push(objInfo);
+    await fs.writeFile('talker.json', JSON.stringify(talker));
+    return res.status(HTTP_OK_STATUS).send(objInfo);
+  },
+);
+
 module.exports = router;
