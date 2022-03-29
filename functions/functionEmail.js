@@ -1,41 +1,41 @@
-function verifyEmail(email) {
+function verifyEmail(req, res, next) {
+  const { email } = req.body;
   if (!email || email.length === 0) {
-    return {
+    return res.status(400).json({
       message: 'O campo "email" é obrigatório',
-    };
+    });
   }
+  next();
 }
-function verifyPassword(password) {
+function verifyPassword(req, res, next) {
+  const { password } = req.body;
   if (!password || password.length === 0) {
-    return {
+    return res.status(400).json({
       message: 'O campo "password" é obrigatório',
-    };
+    });
   }
+  next();
 }
-function verifySintaxEmail(email) {
+function verifySintaxEmail(req, res, next) {
+  const { email } = req.body;
   const validation = /\S+@\S+\.\S+/;
   // console.log(email.match(validation));
   if (!email.match(validation)) {
-    return {
+    return res.status(400).json({
       message: 'O "email" deve ter o formato "email@email.com"',
-    };
+    });
   }
+  next();
 }
-function verifySintaxPassword(password) {
+function verifySintaxPassword(req, res, next) {
+  const { password } = req.body;
   const quantity = 6;
   if (password.length < quantity) {
-    return {
+    return res.status(400).json({
       message: 'O "password" deve ter pelo menos 6 caracteres',
-    };
+    });
   }
-}
-function verifyLogin(email, password) {
-  return (
-    verifyEmail(email)
-    || verifyPassword(password)
-    || verifySintaxEmail(email)
-    || verifySintaxPassword(password)
-  );
+  next();
 }
 
-module.exports = verifyLogin;
+module.exports = { verifyEmail, verifyPassword, verifySintaxEmail, verifySintaxPassword };
